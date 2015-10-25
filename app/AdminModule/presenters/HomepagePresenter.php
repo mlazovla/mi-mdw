@@ -2,10 +2,7 @@
 
 namespace App\AdminModule\Presenters;
 
-use Nette,
-    App\Model;
-
-use App\Model\Category;
+use Nette, App\Model;
 use Nette\Database\Context;
 
 /**
