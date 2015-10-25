@@ -1,0 +1,53 @@
+{**
+ * Listing articles
+ * @var $article database connection to articles
+ *}
+{block content}
+
+<h1 n:block=title>Menu</h1>
+    <div class="pull-right">
+        <a n:href="create" class="btn btn-success">Nová položka menu</a>
+    </div>
+
+{if count($menu)}
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <th>Název</th>
+            <th>URL / článek</th>
+            <th>Nadřazené menu</th>
+            <th>Akce</th>
+        </thead>
+        <tbody>
+            {foreach $menu as $m}
+            <tr>
+                <td>
+                    {$m->name}
+                </td>
+                <td>
+                    {if $m->url}
+                        ODKAZ: <a href="{$m->url}">{$m->url}</a>
+                    {elseif $m->article}
+                        ČLÁNEK: {$m->article->name}
+                    {/if}
+                </td>
+                <td>
+                    {if $m->menu}
+                        {$m->menu->name}
+                    {else}
+                        <i>-- není --</i>
+                    {/if}
+                </td>
+                <td>
+                    <a n:href="edit $m->id" class="btn btn-warning">Upravit</a>
+                    <a n:href="delete $m->id" class="btn btn-danger">Smazat</a>
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+{else}
+    <p>Žádné články.</p>
+{/if}
+
+
+{/block}

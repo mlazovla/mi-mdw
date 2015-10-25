@@ -1,0 +1,13 @@
+{block content}
+    <h1>Výrobky</h1>
+    <h2 n:block=title>Upravit výrobek</h2>
+    <div class="pull-right">
+        <a n:href="create" class="btn btn-success">Nový</a>
+    </div>
+
+    {control itemForm}
+
+    <hr />
+    <a n:href="default" class="btn btn-default pull-right">Zrušit</a>
+    <a n:href="default" class="btn btn-default pull-right">Odejít</a>
+{/block}

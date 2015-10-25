@@ -1,0 +1,28 @@
+/* ---------------------------------------
+ * Alena design
+ */
+
+body {
+    background-color: #A52;
+}
+
+.menu {
+    background: #C82;
+}
+
+.menu-item {
+    background-color: #003366;
+    transition: background-color 2s;
+}
+
+.menu-item:hover {
+    background-color: white;
+}
+
+#main-content {
+
+}
+
+footer {
+    height: 2em;
+}

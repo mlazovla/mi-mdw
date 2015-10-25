@@ -1,0 +1,35 @@
+{**
+ * Listing users
+ * @var $item database connection to user and user model
+ *}
+{block content}
+
+<h1 n:block=title>Účty</h1>
+    <div class="pull-right">
+        <a n:href="create" class="btn btn-success">Nový účet</a>
+    </div>
+{if count($item)}
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <th>Email / username</th>
+            <th>Akce</th>
+        </thead>
+        <tbody>
+            {foreach $item as $i}
+            <tr>
+                <td>
+                    {$i->email}
+                </td>
+                <td>
+                    <a n:href="delete $i->id" class="btn btn-danger">Smazat</a>
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+{else}
+    <p>Žádné výrobky.</p>
+{/if}
+
+
+{/block}

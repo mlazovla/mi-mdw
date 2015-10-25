@@ -1,0 +1,53 @@
+{**
+ * Listing manufacturer
+ * @var $manufacturer database connection to manufacturer
+ *}
+{block content}
+
+<h1 n:block=title>Kategorie zboží</h1>
+    <div class="pull-right">
+        <a n:href="create" class="btn btn-success">Nová kategorie</a>
+    </div>
+{if count($category)}
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <th><abbr title="Zorazit na webu?"><i class="glyphicon glyphicon-eye-open"></i></abbr></th>
+            <th>Název</th>
+            <th>Nadřazená kategorie</th>
+            <th>Popis</th>
+            <th>Akce</th>
+        </thead>
+        <tbody>
+            {foreach $category as $a}
+            <tr>
+                <td>
+                    {if $a->visible}
+                    <abbr title="Kategorie je viditelná"><i class="glyphicon glyphicon-eye-open"></i></abbr>
+                    {else}
+                        {*<abbr title="Skrytá kategorie"><i class="glyphicon glyphicon-eye-open"></i></abbr>*}
+                    {/if}
+                </td>
+                <td>
+                    {$a->name}
+                </td>
+                <td>
+                    {if $a->parent}{$category->get($a->parent)->name}{else}-{/if}
+                </td>
+                <td>
+                    {$a->description|noescape|striptags|truncate:50}
+                </td>
+                <td>
+                    <a n:href="edit $a->id" class="btn btn-warning">Upravit</a>
+                    <a n:href="delete $a->id" class="btn btn-danger">Smazat</a>
+                    <a n:href="children $a->id" class="btn btn-info">Zobrazit podkategorie</a>
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+{else}
+    <p>Žádné kategorie.</p>
+{/if}
+
+
+{/block}

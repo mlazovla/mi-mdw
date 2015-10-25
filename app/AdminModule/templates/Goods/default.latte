@@ -1,0 +1,74 @@
+{**
+ * Listing manufacturer
+ * @var $manufacturer database connection to manufacturer
+ *}
+{block content}
+
+<h1 n:block=title>Výrobek</h1>
+    <div class="pull-right">
+        <a n:href="create" class="btn btn-success">Nový výrobek</a>
+    </div>
+{if count($item)}
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <th>Výrobce</th>
+            <th>Název</th>
+            <th>Kategorie</th>
+            <th>Skladem</th>
+            <th>Doporučený</th>
+            <th>Popis</th>
+            <th>Akce</th>
+        </thead>
+        <tbody>
+            {foreach $item as $i}
+            <tr>
+                <td>
+                    {if $i->manufacturer}{$i->manufacturer->name}{else}-{/if}
+                </td>
+                <td>
+                    {$i->name}
+                </td>
+                <td>
+                    {if $i->category}{$i->category->name}{else}-{/if}
+                </td>
+                <td>
+                    {$i->stock}
+                </td>
+                <td>
+                    {if $i->recommended}
+                    <abbr title="Výrobek je označen jako doporučený"><i class="glyphicon glyphicon-thumbs-up"></i></abbr>
+                    {/if}
+                </td>
+                <td>
+                    {$i->description|noescape|striptags|truncate:50}
+                </td>
+                <td>
+                    <a n:href="edit $i->id" class="btn btn-warning">Upravit</a>
+                    <abbr title="Změnit doporučení"><a n:href="toggleRecommended $i->id" class="btn btn-warning"><i class="glyphicon glyphicon-thumbs-up"></i></a></abbr>
+                    <a n:href="delete $i->id" class="btn btn-danger">Smazat</a>
+                    <abbr title="Fotky výrobku"><a n:href="Photo:default $i->id" class="btn btn-default"><i class="glyphicon glyphicon-camera"></i></a></abbr>
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+
+    <div class="pull-right">
+        {if $page > 0}
+        <a n:href="default ($page-1)" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i></a>
+        {else}
+        <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i></a>
+        {/if}
+
+        {$page*50 + 1} až {($page+1)*50}
+        <a n:href="default ($page+1)" class="btn btn-default"><i class="glyphicon glyphicon-arrow-right"></i></a>
+    </div>
+{else}
+    <p>Žádné výrobky.</p>
+    {if $page}
+    <a n:href="default" class="btn btn-default">Zpět na první stránku</a>
+    {/if}
+{/if}
+
+
+{/block}

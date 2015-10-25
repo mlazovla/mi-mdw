@@ -1,0 +1,20 @@
+{block content}
+<h1>Fotografie</h1>
+<h2 n:block=title>Nová fotografie</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {if $goods->manufacturer}{$goods->manufacturer->name} / {/if}
+        {$goods->name}
+    </div>
+    <div class="panel-body">{$goods->description|noescape}</div>
+</div>
+
+<p>Vyberte jednu nebo více fotografií ve formátu JPEG. Doporučená velikost fotografií je 800x600 px.</p>
+
+{control itemForm}
+
+<hr />
+<a n:href="default goodsId => $goods->id" class="btn btn-default pull-right">Zrušit</a>
+
+{/block}

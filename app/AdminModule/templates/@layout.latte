@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{**
+ * @param string   $basePath web base path
+ * @param array    $flashes  flash messages
+ *}
+<html lang="cs">
+
+<head>
+	<meta charset="utf-8">
+
+
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+	<title>{ifset title}{include title|striptags} | {/ifset}Alena</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{$basePath}/css/admin.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	
+    {block scripts}
+    <!-- jQuery -->
+    <script src="{$basePath}/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{$basePath}/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
+
+    <!-- tinyMCE -->
+    <script src="{$basePath}/js/tinymce/tinymce.min.js"></script>
+        <script>tinymce.init({
+                selector:'textarea',
+                paste_data_images: true,
+                paste_as_text: true,
+                plugins: [
+                    "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+                    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                    "save table contextmenu directionality emoticons template paste textcolor"
+                ],
+                height: 400,
+                autoresize_on_init: true,
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons"
+            });</script>
+	{/block}
+
+
+</head>
+
+<body>
+
+    {include 'navigation.inc'}
+    <div class="container">
+        <div n:if="count($flashes)>0" id="flashmessages">
+            <div n:foreach="$flashes as $flash" class='alert alert-{$flash->type} alert-dismissible' role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {$flash->message|noescape}
+            </div>
+        </div>
+
+        {block content}{/block}
+    </div>
+
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>Copyright &copy; Vladimír Mlázovský 2015</p>
+        </div>
+    </footer>
+
+    <!-- on ready scripts -->
+    <script>
+        $(document).ready(function(){
+            $('.btn-danger').on('click', function(){
+                var answer = confirm("Určitě?");
+                if (!answer) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
