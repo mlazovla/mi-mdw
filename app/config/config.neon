@@ -23,5 +23,6 @@ services:
 	- App\Model\UserManager
 	- App\Forms\SignFormFactory
 	router: App\RouterFactory::createRouter
+	svg: App\Model\Svg
 	database: @Nette\Database\Context
 

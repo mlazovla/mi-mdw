@@ -15,6 +15,10 @@ class SVGPathElementException extends \InvalidArgumentException {
 
 /**
  * Parse SVG
+ * http://www.w3schools.com/svg/svg_path.asp
+ *
+ *
+ * This parser enable to read some
  */
 class SVGParser extends Nette\Object
 {
