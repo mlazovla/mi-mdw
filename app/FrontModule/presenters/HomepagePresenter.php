@@ -2,12 +2,12 @@
 
 namespace App\FrontModule\Presenters;
 
-use Nette,
-    App\Model;
+	use Nette,
+		App\Model;
 
-/**
- * Homepage presenter.
- */
+	/**
+	 * Homepage presenter.
+	 */
 class HomepagePresenter extends BasePresenter
 {
 	/**
@@ -32,7 +32,7 @@ class HomepagePresenter extends BasePresenter
 
 	public function uploadSvgFormSuceeded(Nette\Application\UI\Form $form, $values)
 	{
-		$filePath = "../www/content/svg/" .time() . ".svg";
+		$filePath = "../www/content/svg/" . time() . ".svg";
 		$values['file']->move($filePath);
 
 		$fileContent = file_get_contents($filePath);
@@ -47,20 +47,23 @@ class HomepagePresenter extends BasePresenter
 			$histAngle->add($svgParsed->getAngles());
 
 			// Persist
-			$this->svg->insert(
+			$lastSvg = $this->svg->insert(
 				array(
 					'name' => $values['file']->getSanitizedName(),
 					'content' => $fileContent,
-					'h_angle' => (string) $histAngle
+					'h_angle' => (string)$histAngle
 				)
 			);
 		} catch (\Exception $ex) {
-			$this->flashMessage('SVG cannot be compared. '.$ex->getMessage(), 'danger');
+			$this->flashMessage('SVG cannot be compared. ' . $ex->getMessage(), 'danger');
 			$this->redirect('default');
 		}
 
 		$this->flashMessage('SVG suceffuly uploaded.', 'success');
-
-		$this->redirect('default');
+		if (isset($lastSvg)) {
+			$this->redirect('Svg:show',  ['id' => $lastSvg->id]);
+		} else {
+			$this->redirect('default');
+		}
 	}
-}
+};

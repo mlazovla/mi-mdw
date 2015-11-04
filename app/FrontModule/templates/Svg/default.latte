@@ -1,0 +1,19 @@
+{block content}
+
+	<h1 n:block="title">Last SVGs</h1>
+
+	<div n:foreach="$svgs as $svg" class="col-xs-12 col-sm-6 col-md-4 -table">
+		<div class="thumbnail">
+			<h3 class="only-one-row">{$svg->name}</h3>
+			<div class="border-top">
+				<a n:href="show $svg->id">Open & Compare</a> |
+				<a n:href="raw $svg->id" title="Open and use CTRL+S">Download</a><br />
+			</div>
+			<div class="placeholder-h250">
+				<img src="{link img $svg->id}" class="thumbnail-image"/>
+			</div>
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+{/block}

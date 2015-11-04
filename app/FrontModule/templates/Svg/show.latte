@@ -1,0 +1,14 @@
+{block content}
+
+	<h1 n:block="title">{$svg->name}</h1>
+
+	<div class="border-top">
+		<a n:href="default">Last SVGs</a> |
+		<a n:href="raw $svg->id" title="Open and use CTRL+S">Download</a><br />
+	</div>
+	<img src="{link img $svg->id}" class="main-image"/>
+
+	</div>
+
+	<div class="clearfix"></div>
+{/block}

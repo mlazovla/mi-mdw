@@ -402,7 +402,7 @@ class SVGParser extends Nette\Object
 		$size_va = sqrt($vec_va_x*$vec_va_x + $vec_va_y*$vec_va_y);
 		$size_vb = sqrt($vec_vb_x*$vec_vb_x + $vec_vb_y*$vec_vb_y);
 		$dotProduct = $vec_va_x*$vec_vb_x + $vec_va_y*$vec_vb_y;
-		return acos($dotProduct / ($size_va * $size_vb));
+		return (($size_va * $size_vb) == 0) ? 0 : acos($dotProduct / ($size_va * $size_vb));
 	}
 
 	/**
