@@ -42,9 +42,15 @@ class HomepagePresenter extends BasePresenter
 
 			// Create Histograms
 			$histAngle = new Model\Histogram(30, 0, 3.1415);
+			$histColorH = new Model\Histogram(8, 0, 1);
+			$histColorS = new Model\Histogram(8, 0, 1);
+			$histColorL = new Model\Histogram(8, 0, 1);
 
 			// Fill Histograms
 			$histAngle->add($svgParsed->getAngles());
+			foreach($svgParsed->getColors() as $color) {
+				$histColorH;
+			}
 
 			// Persist
 			$lastSvg = $this->svg->insert(

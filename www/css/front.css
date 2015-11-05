@@ -44,6 +44,7 @@ footer {
 .placeholder-h250 {
     height: 250px;
     vertical-align: middle;
+    background-image: url('../img/bg.svg');
 }
 
 .only-one-row {
@@ -54,3 +55,4 @@ footer {
     -o-text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
 }
+

@@ -32,6 +32,16 @@ class SvgPresenter extends BasePresenter
 		$this->template->svg = $this->svg->get($id);
 	}
 
+	public function actionDelete($id)
+	{
+		$deletedSvg = $this->svg->get($id);
+		$name = $deletedSvg->name;
+		$deletedSvg->delete();
+
+		$this->flashMessage('SVG "'. $name . '"" was deleted.', 'success');
+		$this->redirect('Svg:default');
+	}
+
 	public function actionRaw($id)
 	{
 		$item = $this->svg->get($id);
