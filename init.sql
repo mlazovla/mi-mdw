@@ -15,5 +15,18 @@ CREATE TABLE `svg` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `svg_similarity`;
+CREATE TABLE `svg_similarity` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `src_svg_id` int(11) unsigned NOT NULL,
+  `dst_svg_id` int(11) unsigned NOT NULL,
+  `angle` float DEFAULT NULL COMMENT 'Similarity coef.',
+  `colors` float DEFAULT NULL COMMENT 'Similarity coef.',
+  PRIMARY KEY (`id`),
+  KEY `src_svg_id` (`src_svg_id`),
+  KEY `dst_svg_id` (`dst_svg_id`),
+  CONSTRAINT `svg_similarity_ibfk_1` FOREIGN KEY (`src_svg_id`) REFERENCES `svg` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `svg_similarity_ibfk_2` FOREIGN KEY (`dst_svg_id`) REFERENCES `svg` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 2015-11-04 15:31:59
