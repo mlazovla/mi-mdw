@@ -22,6 +22,12 @@ class SvgPresenter extends BasePresenter
 	 */
 	public $svg;
 
+	/**
+	 * @var Model\SvgSimilarity
+	 * @inject
+	 */
+	public $svgSimilarity;
+
 	public function renderDefault()
 	{
 		$this->template->svgs = $this->svg->select('id,name')->order('id DESC')->limit(10);
@@ -30,6 +36,7 @@ class SvgPresenter extends BasePresenter
 	public function renderShow($id)
 	{
 		$this->template->svg = $this->svg->get($id);
+		$this->template->similarSvgs = $this->svgSimilarity->where('src_svg_id = ?', $id)->limit(6);
 	}
 
 	public function actionDelete($id)

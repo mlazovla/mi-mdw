@@ -24,5 +24,6 @@ services:
 	- App\Forms\SignFormFactory
 	router: App\RouterFactory::createRouter
 	svg: App\Model\Svg
+	svgSimilarity: App\Model\SvgSimilarity
 	database: @Nette\Database\Context
 
