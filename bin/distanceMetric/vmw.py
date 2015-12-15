@@ -29,7 +29,7 @@ except ImportError:
 
 # I think we need just load our custom histogram here, so we will make a request
 # to database
-db = MySQLdb.connect(host="localhost", user="root", passwd="", db="mi_vwm")
+db = MySQLdb.connect(host="localhost", user="root", passwd="stoupa", db="mi_vwm")
 # you must create a Cursor object. It will let
 #  you execute all the queries you need
 cur = db.cursor()
@@ -77,11 +77,13 @@ for (query, queryFeatures) in index.items():
         # INSERT INTO `svg_similarity` (`id`, `src_svg_id`, `dst_svg_id`, `angle`, `colors`) VALUES (NULL, '1', '2', '0.4', '0.6');
         # print str(id) + ": ", result
         x = db.cursor()
+        sqlstring = """INSERT INTO `svg_similarity` (`id`, `src_svg_id`, `dst_svg_id`, `angle`, `colors`) VALUES (NULL, %d, %d, %f, NULL);"""%(query, id, result[0]) 
         try:
-            x.execute("""INSERT INTO `svg_similarity` (`id`, `src_svg_id`, `dst_svg_id`, `angle`, `colors`) VALUES (NULL, query, id, result, NULL)""")
-            db.commit()
+            x.execute(sqlstring)
         except:
             db.rollback()
+    db.commit()    
+    x.close()
 
 # for result in results:
 #     i += 1

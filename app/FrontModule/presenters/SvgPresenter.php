@@ -36,7 +36,7 @@ class SvgPresenter extends BasePresenter
 	public function renderShow($id)
 	{
 		$this->template->svg = $this->svg->get($id);
-		$this->template->similarSvgs = $this->svgSimilarity->where('src_svg_id = ?', $id)->limit(6);
+		$this->template->similarSvgs = $this->svgSimilarity->where('src_svg_id = ? AND dst_svg_id != ?', [$id, $id])->order('total_similariry ASC, angle ASC')->limit(6);
 	}
 
 	public function actionDelete($id)

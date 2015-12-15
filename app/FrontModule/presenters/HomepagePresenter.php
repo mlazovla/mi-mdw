@@ -65,11 +65,50 @@ class HomepagePresenter extends BasePresenter
 			$this->redirect('default');
 		}
 
-		$this->flashMessage('SVG suceffuly uploaded.', 'success');
+		$this->updateSvgSimilarity();
+
+		$this->flashMessage('SVG suceffuly uploaded, starting comparator.', 'success');
 		if (isset($lastSvg)) {
 			$this->redirect('Svg:show',  ['id' => $lastSvg->id]);
 		} else {
 			$this->redirect('default');
 		}
 	}
+
+	public function actionUpdate()
+	{
+		$this->updateSvgSimilarity(true);
+		$this->terminate();
+	}
+
+	public function actionRebuild()
+	{
+		echo ('TRUNCATE SIMILARITY TABLE DATA. <br />');
+		$this->svg->truncateSimilarityTable();
+
+		echo ('COMPUTING NEW SIMILARITY... It can take a while.<br />');
+		$this->updateSvgSimilarity();
+
+		$this->terminate();
+	}
+
+	/**
+	 * Update
+	 * @param bool $verbose
+	 * @return bool
+	 */
+	private function updateSvgSimilarity($verbose = false)
+	{
+		if ($verbose) {
+			$outputDirection = '2>&1';
+		} else {
+			$outputDirection = '> /dev/null 2>/dev/null &';
+		}
+		exec('PYTHONPATH="/Library/Frameworks/Python.framework/Versions/3.5/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/texbin:/usr/local/sbin"; python /Users/vml/Zend/workspaces/DefaultWorkspace11/mi-vwm/bin/distanceMetric/vmw.py ' . $outputDirection, $out, $status);
+		if ($verbose) {
+			dump($out);
+		}
+		return $status == 0;
+	}
+
 };

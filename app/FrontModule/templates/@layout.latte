@@ -68,7 +68,17 @@
 					<ul class="nav navbar-nav">
 						<li><a n:href="Page:about">About</a></li>
 						<li><a n:href="Page:autors">Autors</a></li>
-						<li><a n:href="Svg:default">SVGs</a></li>
+						<li><a n:href="Svg:default"><b>SVGs</b></a></li>
+						<li>
+							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+								<i class="glyphicon glyphicon-cog"></i> Tools
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+								<li><a n:href="Homepage:update" target="_blank"><i class="glyphicon glyphicon-refresh"></i> Update</a></li>
+								<li><a n:href="Homepage:rebuild" target="_blank"><i class="glyphicon glyphicon-repeat"></i> Rebulid index</a></li>
+							</ul>
+						</li>
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div><!--/.container-fluid -->

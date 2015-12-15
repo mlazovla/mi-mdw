@@ -249,12 +249,14 @@ class SVGParser extends Nette\Object
 			$this->height = $docSizes[3];
 		}
 
+		$xmlObject->registerXPathNamespace('svg', 'http://www.w3.org/2000/svg');
+		$pathes = $xmlObject->xpath('//svg:path');
 
-		if (! count($xmlObject->g->path)) {
+		if (! count($pathes)) {
 			throw new SVGPathElementException('SVG Parser: do not find Path element in svg.');
 		}
 
-		foreach ($xmlObject->g->path as $path) {
+		foreach ($pathes as $path) {
 			$d = strtolower((string)$path['d']);
 			$style = strtolower((string)$path['style']);
 
@@ -317,6 +319,8 @@ class SVGParser extends Nette\Object
 		$numbers = explode(',', $m);
 		if (count($numbers) == 2) {
 			$this->m[] = $numbers;
+		} else {
+			$this->parseL(substr($m, strpos($m, ' ')));
 		}
 	}
 

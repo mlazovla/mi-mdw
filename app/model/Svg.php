@@ -19,4 +19,12 @@ class Svg extends \Nette\Database\Table\Selection {
 		parent::__construct($database, $database->getConventions(), $this->table);
 		$this->db = $database;
 	}
+
+	/**
+	 * Truncate the similarity table
+	 */
+	public function truncateSimilarityTable()
+	{
+		$this->context->getConnection()->pdo->query("TRUNCATE TABLE `svg_similarity`;");
+	}
 }

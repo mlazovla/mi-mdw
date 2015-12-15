@@ -1,6 +1,19 @@
-{block content}
+{block jumbotron}
+	<button id="showdata" class="btn btn-default pull-right" role="button">Show data</button>
+	<h2 n:block="title">{$svg->name}</h2>
+	<div id="cleardata" class="hidden">
+		<h3>Angle histogram</h3>
+		<pre>{$svg->h_angle}</pre><br/>
+		<h3>Color histogram (HSL)</h3>
+		<b>H</b> <pre>{$svg->h_color_h}</pre><br/>
+		<b>S</b> <pre>{$svg->h_color_s}</pre><br/>
+		<b>L</b> <pre>{$svg->h_color_l}</pre><br/>
+		<h3>XML</h3>
+		<pre>{$svg->content}</pre>
+	</div>
+{/block}
 
-	<h1 n:block="title">{$svg->name}</h1>
+{block content}
 
 	<div class="border-top">
 		<a n:href="default">Last SVGs</a> |
@@ -28,4 +41,12 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+
+		$('#showdata').on('click', function(){
+			$('#cleardata').toggleClass('hidden');;
+		})
+
+	</script>
 {/block}
