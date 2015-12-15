@@ -42,11 +42,24 @@ cur.execute("SELECT svg.id, svg.`h_angle`, svg.`h_color_h`, svg.`h_color_l`, svg
 # filename (or id) and the 'value' our computed features
 index = {}
 
+
 # Then we need to update index
 # print all the first cell of all the rows
 for row in cur.fetchall():
-    # print row
-    index[row[0]] = [int(angle) for angle in row[1].split(","), int(color1) for color1 in row[2].split(","), int(color2) for color2 in row[2].split(","),int(color3) for color3 in row[2].split(",")]
+    color1Hist = None
+    color2Hist = None
+    color3Hist = None
+
+    if row[1] is not None:
+        anglesHist = [int(angle) for angle in row[1].split(",")]
+    if row[2] is not None:
+        color1Hist = [int(color1) for color1 in row[2].split(",")]
+    if row[3] is not None:
+        color2Hist = [int(color2) for color2 in row[3].split(",")]
+    if row[4] is not None:
+        color3Hist = [int(color3) for color3 in row[4].split(",")]
+    index[row[0]] = [anglesHist, color1Hist, color2Hist, color3Hist]
+    # index[row[1]] = row[3].split(",")
 
 results = []
 searcher = Searcher(index)
