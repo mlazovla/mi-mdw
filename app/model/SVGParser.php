@@ -274,7 +274,7 @@ class SVGParser extends Nette\Object
 			foreach($pathNumbers as $k => $numbers) {
 				switch($pathLetters[$k]) {
 					case 'm':
-						$this->parseM($numbers);
+						$this->parseL($numbers);
 						break;
 					case 'c':
 						$this->parseC($numbers);
@@ -306,6 +306,7 @@ class SVGParser extends Nette\Object
 			if ($rgb['r'] != -1) {
 				$this->colors[] = $this->rgb2hsl($rgb['r'], $rgb['g'], $rgb['b']);
 			}
+
 		}
 	}
 

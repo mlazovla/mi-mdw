@@ -30,7 +30,7 @@ class SvgPresenter extends BasePresenter
 
 	public function renderDefault()
 	{
-		$this->template->svgs = $this->svg->select('id,name')->order('id DESC')->limit(10);
+		$this->template->svgs = $this->svg->select('id,name')->order('id DESC')->limit(24);
 	}
 
 	public function renderShow($id)

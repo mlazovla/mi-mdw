@@ -25,15 +25,17 @@
 
 	<div class="clearfix"></div>
 
+	{var $i=0}
 	<div>
 		<div n:foreach="$similarSvgs as $similarSvg" class="col-xs-12 col-sm-6 col-md-4 -table">
 			<div class="thumbnail">
-				<h3 class="only-one-row">{$similarSvg->dst_svg->name}</h3>
+
+				<h3 class="only-one-row">{++$i} <small>{$similarSvg->dst_svg->name}</small></h3>
 				<div class="border-top">
 					<a n:href="show $similarSvg->dst_svg->id">Open & Compare</a><br />
 					<b>total {$similarSvg->total_similariry}</b>,
 					angle {$similarSvg->angle},
-					angle {$similarSvg->colors}
+					colors {$similarSvg->colors}
 				</div>
 				<div class="placeholder-h250">
 					<img src="{link img $similarSvg->dst_svg->id}" class="thumbnail-image"/>

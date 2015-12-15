@@ -73,6 +73,8 @@ class Histogram extends Nette\Object
 
 		// Select a position of number and incriminate
 		$pos = (int)floor(($number - $this->min) / $this->chunksize);
+		$pos = max($pos, 0);
+		$pos = min($pos, $this->partCount - 1);
 		$this->values[$pos]++;
 	}
 

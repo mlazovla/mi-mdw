@@ -48,8 +48,11 @@ class HomepagePresenter extends BasePresenter
 
 			// Fill Histograms
 			$histAngle->add($svgParsed->getAngles());
+
 			foreach($svgParsed->getColors() as $color) {
-				$histColorH;
+				$histColorH->add($color['h']);
+				$histColorS->add($color['s']);
+				$histColorL->add($color['l']);
 			}
 
 			// Persist
@@ -57,7 +60,10 @@ class HomepagePresenter extends BasePresenter
 				array(
 					'name' => $values['file']->getSanitizedName(),
 					'content' => $fileContent,
-					'h_angle' => (string)$histAngle
+					'h_angle' => (string)$histAngle,
+					'h_color_h' => (string)$histColorH,
+					'h_color_S' => (string)$histColorS,
+					'h_color_l' => (string)$histColorL,
 				)
 			);
 		} catch (\Exception $ex) {
