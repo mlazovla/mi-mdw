@@ -98,6 +98,22 @@ class HomepagePresenter extends BasePresenter
 		$this->terminate();
 	}
 
+	public function actionRebuildTest()
+	{
+
+		echo ('TRUNCATE SIMILARITY TABLE DATA. <br />');
+		$this->svg->truncateSimilarityTable();
+
+		echo ('COMPUTING NEW SIMILARITY, TIME STARTED... It can take a while.<br />');
+		$start = microtime(true);
+		$this->updateSvgSimilarity(true);
+		$konec = microTime (TRUE);
+		echo "<br/>" . round((microtime(true) - $start), 3) .' sec';
+
+		$this->terminate();
+	}
+
+
 	/**
 	 * Update
 	 * @param bool $verbose
@@ -112,7 +128,12 @@ class HomepagePresenter extends BasePresenter
 		}
 		exec('PYTHONPATH="/Library/Frameworks/Python.framework/Versions/3.5/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/texbin:/usr/local/sbin"; python /Users/vml/Zend/workspaces/DefaultWorkspace11/mi-vwm/bin/distanceMetric/vmw.py ' . $outputDirection, $out, $status);
 		if ($verbose) {
-			dump($out);
+			echo "<pre>\n";
+			foreach($out as $line) {
+				echo $line ."\n";
+			}
+			echo "</pre>\n";
+
 		}
 		return $status == 0;
 	}
