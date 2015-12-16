@@ -29,23 +29,12 @@ except ImportError:
 
 # I think we need just load our custom histogram here, so we will make a request
 # to database
-db = MySQLdb.connect(host="localhost", user="root", passwd="stoupa", db="mi_vwm")
-# you must create a Cursor object. It will let
-#  you execute all the queries you need
-cur = db.cursor()
-# Use all the SQL you like
-cur.execute("SELECT svg.id, svg.`h_angle`, svg.`h_color_h`, svg.`h_color_l`, svg.`h_color_s` FROM `svg` LEFT JOIN svg_similarity ss ON `svg`.`id` = ss.`src_svg_id` WHERE ss.`src_svg_id` IS NULL")
+db = MySQLdb.connect(host="localhost", user="root", passwd="", db="mi_vwm")
 
-# At firts select only those images, that don't yet have similarity
-# initialize the index dictionary to store our quantifed
-# images, with the 'key' of the dictionary being the image
-# filename (or id) and the 'value' our computed features
+indexingCur = db.cursor()
+indexingCur.execute("SELECT svg.id, svg.`h_angle`, svg.`h_color_h`, svg.`h_color_l`, svg.`h_color_s` FROM `svg`")
 index = {}
-
-
-# Then we need to update index
-# print all the first cell of all the rows
-for row in cur.fetchall():
+for row in indexingCur.fetchall():
     color1Hist = None
     color2Hist = None
     color3Hist = None
@@ -59,14 +48,46 @@ for row in cur.fetchall():
     if row[4] is not None:
         color3Hist = [int(color3) for color3 in row[4].split(",")]
     index[row[0]] = [anglesHist, color1Hist, color2Hist, color3Hist]
-    # index[row[1]] = row[3].split(",")
+
+indexingCur.close()
+searcher = Searcher(index)
+
+# you must create a Cursor object. It will let
+#  you execute all the queries you need
+requestCur = db.cursor()
+# Use all the SQL you like
+requestCur.execute("SELECT svg.id, svg.`h_angle`, svg.`h_color_h`, svg.`h_color_l`, svg.`h_color_s` FROM `svg` LEFT JOIN svg_similarity ss ON `svg`.`id` = ss.`src_svg_id` WHERE ss.`src_svg_id` IS NULL")
+
+# At firts select only those images, that don't yet have similarity
+# initialize the index dictionary to store our quantifed
+# images, with the 'key' of the dictionary being the image
+# filename (or id) and the 'value' our computed features
+queryIndex = {}
+
+
+# Then we need to update index
+# print all the first cell of all the rows
+for row in requestCur.fetchall():
+    color1Hist = None
+    color2Hist = None
+    color3Hist = None
+
+    if row[1] is not None:
+        anglesHist = [int(angle) for angle in row[1].split(",")]
+    if row[2] is not None:
+        color1Hist = [int(color1) for color1 in row[2].split(",")]
+    if row[3] is not None:
+        color2Hist = [int(color2) for color2 in row[3].split(",")]
+    if row[4] is not None:
+        color3Hist = [int(color3) for color3 in row[4].split(",")]
+    queryIndex[row[0]] = [anglesHist, color1Hist, color2Hist, color3Hist]
 
 results = []
-searcher = Searcher(index)
+requestCur.close()
 
 # loop over images in the index -- we will use each one as
 # a query image
-for (query, queryFeatures) in index.items():
+for (query, queryFeatures) in queryIndex.items():
     # perform the search using the current query
     results = searcher.search(queryFeatures)
     print "Query was: " + str(query) + ". Results DESC:"
@@ -76,13 +97,15 @@ for (query, queryFeatures) in index.items():
     for (id, result) in results.iteritems():
         # INSERT INTO `svg_similarity` (`id`, `src_svg_id`, `dst_svg_id`, `angle`, `colors`) VALUES (NULL, '1', '2', '0.4', '0.6');
         # print str(id) + ": ", result
+        sqlstring = """INSERT INTO `svg_similarity` (`id`, `src_svg_id`, `dst_svg_id`, `angle`, `colors`) VALUES (NULL, %d, %d, %f, NULL);"""%(query, id, result[0])
         x = db.cursor()
-        sqlstring = """INSERT INTO `svg_similarity` (`id`, `src_svg_id`, `dst_svg_id`, `angle`, `colors`) VALUES (NULL, %d, %d, %f, NULL);"""%(query, id, result[0]) 
         try:
+            print sqlstring
             x.execute(sqlstring)
         except:
+            print sqlstring + " ERROR"
             db.rollback()
-    db.commit()    
+    db.commit()
     x.close()
 
 # for result in results:
@@ -122,4 +145,5 @@ for (query, queryFeatures) in index.items():
 # cv2.imshow("Results 1-5", montageA)
 # # cv2.imshow("Results 6-10", montageB)
 # cv2.waitKey(0)
+
 
