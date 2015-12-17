@@ -29,7 +29,10 @@ except ImportError:
 
 # I think we need just load our custom histogram here, so we will make a request
 # to database
-db = MySQLdb.connect(host="localhost", user="root", passwd="", db="mi_vwm")
+try:
+    db = MySQLdb.connect(host="localhost", user="root", passwd="stoupa", db="mi_vwm")
+except:
+    db = MySQLdb.connect(host="localhost", user="root", passwd="", db="mi_vwm")
 
 indexingCur = db.cursor()
 indexingCur.execute("SELECT svg.id, svg.`h_angle`, svg.`h_color_h`, svg.`h_color_l`, svg.`h_color_s` FROM `svg`")
