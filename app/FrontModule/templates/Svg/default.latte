@@ -6,7 +6,8 @@
 		<div class="thumbnail">
 			<h3 class="only-one-row">{$svg->name}</h3>
 			<div class="border-top">
-				<a n:href="show $svg->id">Open & Compare</a> |
+				<a n:href="show $svg->id">Compare total</a> |
+				<a n:href="color $svg->id">Compare colors</a> |
 				<a n:href="raw $svg->id" title="Open and use CTRL+S">Download</a>
 				<a n:href="delete $svg->id" title="Remove" onclick="return confirm('Are you sure?')" class="text-danger pull-right"><i class="glyphicon glyphicon-trash"></i></a>
 			</div>

@@ -40,6 +40,13 @@ class SvgPresenter extends BasePresenter
 		//$this->template->similarSvgs = $this->svgSimilarity->where('(src_svg_id = ? AND dst_svg_id != ?) OR (dst_svg_id = ? AND src_svg_id != ?)', [$id, $id, $id, $id])->group('dst_svg_id')->order('total_similariry ASC, angle ASC')->limit(6);
 	}
 
+	public function renderColor($id)
+	{
+		$this->template->svg = $this->svg->get($id);
+		$this->template->similarSvgs = $this->svgSimilarity->where('src_svg_id = ? AND dst_svg_id != ?', [$id, $id])->order('colors ASC')->limit(6);
+		//$this->template->similarSvgs = $this->svgSimilarity->where('(src_svg_id = ? AND dst_svg_id != ?) OR (dst_svg_id = ? AND src_svg_id != ?)', [$id, $id, $id, $id])->group('dst_svg_id')->order('total_similariry ASC, angle ASC')->limit(6);
+	}
+
 	public function actionDelete($id)
 	{
 		$deletedSvg = $this->svg->get($id);

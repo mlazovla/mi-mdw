@@ -1,6 +1,6 @@
 {block jumbotron}
 	<button id="showdata" class="btn btn-default pull-right" role="button">Show data</button>
-	<h2 n:block="title">{$svg->name}</h2>
+	<h2 n:block="title">{$svg->name} <small>colors</small></h2>
 	<div id="cleardata" class="hidden">
 		<h3>Angle histogram</h3>
 		<pre>{$svg->h_angle}</pre><br/>

@@ -100,13 +100,13 @@ for (query, queryFeatures) in queryIndex.items():
     for (id, result) in results.iteritems():
         # INSERT INTO `svg_similarity` (`id`, `src_svg_id`, `dst_svg_id`, `angle`, `colors`) VALUES (NULL, '1', '2', '0.4', '0.6');
         # print str(id) + ": ", result
-        # avg_color = NULL
-        # avg_distance = NULL
-        # if result[1] is not None and result[2] is not None and result[3] is not None:
-        #     avg_color = (result[1]+result[2]+result[3]) / 3
-        #     avg_distance = (avg_color + 3*result[0])/4
-        #sqlstring = """INSERT INTO `svg_similarity` (`id`, `src_svg_id`, `dst_svg_id`, `angle`, `colors`, `EDIT! total`) VALUES (NULL, %d, %d, %f, NULL);"""%(query, id, result[0])
-        sqlstring = """INSERT INTO `svg_similarity` (`id`, `src_svg_id`, `dst_svg_id`, `angle`, `colors`) VALUES (NULL, %d, %d, %f, NULL);"""%(query, id, result[0])
+        avg_color = "NULL"
+        avg_distance = "NULL"
+        if result[1] is not None and result[2] is not None and result[3] is not None:
+             avg_color = (result[1]+result[2]+result[3]) / 3
+             avg_distance = (avg_color + 3*result[0])/4
+        sqlstring = """INSERT INTO `svg_similarity` (`id`, `src_svg_id`, `dst_svg_id`, `angle`, `colors`, `total_similariry`) VALUES (NULL, %d, %d, %f, %f, %f);"""%(query, id, result[0], avg_color, avg_distance)
+        # sqlstring = """INSERT INTO `svg_similarity` (`id`, `src_svg_id`, `dst_svg_id`, `angle`, `colors`) VALUES (NULL, %d, %d, %f, NULL);"""%(query, id, result[0])
         x = db.cursor()
         try:
             print sqlstring
